@@ -1,0 +1,13 @@
+Django==4.2
+djangorestframework
+psycopg2-binary
+django-filter
+celery
+redis
+django-redis
+django-silk
+drf-spectacular
+pytest
+pytest-django
+coverage
+python-dotenv
