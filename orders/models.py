@@ -1,27 +1,21 @@
-from django.conf import settings
 from django.db import models
-
-from products.models import Product
-
-
-User = settings.AUTH_USER_MODEL
+from django.conf import settings
 
 
 class Order(models.Model):
 
     STATUS_CHOICES = (
         ("new", "New"),
-        ("confirmed", "Confirmed"),
-        ("processing", "Processing"),
-        ("sent", "Sent"),
-        ("done", "Done"),
-        ("canceled", "Canceled"),
+        ("paid", "Paid"),
+        ("shipped", "Shipped"),
+        ("completed", "Completed"),
+        ("cancelled", "Cancelled"),
     )
 
     user = models.ForeignKey(
-        User,
-        related_name="orders",
-        on_delete=models.CASCADE
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="orders"
     )
 
     status = models.CharField(
@@ -30,20 +24,9 @@ class Order(models.Model):
         default="new"
     )
 
-    created_at = models.DateTimeField(
-        auto_now_add=True
-    )
-
-    updated_at = models.DateTimeField(
-        auto_now=True
-    )
-
-    delivery_address = models.CharField(
-        max_length=500
-    )
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-
         return f"Order #{self.id}"
 
 
@@ -51,12 +34,12 @@ class OrderItem(models.Model):
 
     order = models.ForeignKey(
         Order,
-        related_name="items",
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name="items"
     )
 
     product = models.ForeignKey(
-        Product,
+        "products.Product",
         on_delete=models.CASCADE
     )
 
@@ -68,5 +51,4 @@ class OrderItem(models.Model):
     )
 
     def __str__(self):
-
         return f"{self.product} x {self.quantity}"

@@ -1,35 +1,14 @@
 from django.contrib import admin
-
-from .models import Product, ProductSpecification
-
-
-class ProductSpecificationInline(admin.TabularInline):
-
-    model = ProductSpecification
-
-    extra = 1
+from .models import Product, Category
 
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
 
-    list_display = (
-        "id",
-        "name",
-        "price",
-        "stock",
-    )
-
-    inlines = [
-        ProductSpecificationInline
-    ]
+    list_display = ("id", "name", "price", "stock", "category")
 
 
-@admin.register(ProductSpecification)
-class ProductSpecificationAdmin(admin.ModelAdmin):
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
 
-    list_display = (
-        "product",
-        "key",
-        "value",
-    )
+    list_display = ("id", "name")

@@ -1,28 +1,15 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+class User(AbstractUser):
+    email = models.EmailField(unique=True)
+    REQUIRED_FIELDS = ["username"]
 
 class Address(models.Model):
-
-    user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name="addresses"
-    )
-
-    city = models.CharField(max_length=255)
-
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="addresses")
     street = models.CharField(max_length=255)
-
-    house = models.CharField(max_length=50)
-
-    apartment = models.CharField(
-        max_length=50,
-        blank=True,
-        null=True
-    )
-
-    created_at = models.DateTimeField(auto_now_add=True)
+    city = models.CharField(max_length=100)
+    postal_code = models.CharField(max_length=20)
 
     def __str__(self):
-        return f"{self.city} {self.street} {self.house}"
+        return f"{self.street}, {self.city}"
