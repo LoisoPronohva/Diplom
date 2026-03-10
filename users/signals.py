@@ -1,10 +1,12 @@
 from django.db.models.signals import post_save
-from django.contrib.auth.models import User
 from django.dispatch import receiver
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 @receiver(post_save, sender=User)
 def user_created(sender, instance, created, **kwargs):
-
     if created:
-        print(f"User created: {instance.username}")
+        # Здесь простой вывод; в продакшне используйте логирование/отправку писем
+        print(f"User created: {instance}")

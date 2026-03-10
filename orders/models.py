@@ -3,7 +3,6 @@ from django.conf import settings
 
 
 class Order(models.Model):
-
     STATUS_CHOICES = (
         ("new", "New"),
         ("paid", "Paid"),
@@ -18,6 +17,9 @@ class Order(models.Model):
         related_name="orders"
     )
 
+    # Поле, используемое в сериализаторе и тестах
+    delivery_address = models.CharField(max_length=255, blank=True, null=True)
+
     status = models.CharField(
         max_length=20,
         choices=STATUS_CHOICES,
@@ -31,7 +33,6 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
-
     order = models.ForeignKey(
         Order,
         on_delete=models.CASCADE,
