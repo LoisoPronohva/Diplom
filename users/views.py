@@ -1,11 +1,22 @@
 from rest_framework import generics
-from .models import User, Address
-from .serializers import RegisterSerializer, UserSerializer, AddressSerializer
+from .models import User
+from .serializers import UserSerializer
 
-class RegisterView(generics.CreateAPIView):
+
+class UserListView(generics.ListCreateAPIView):
+    """
+    Получение списка пользователей
+    и создание нового пользователя
+    """
+
     queryset = User.objects.all()
-    serializer_class = RegisterSerializer
+    serializer_class = UserSerializer
 
-class AddressListCreateView(generics.ListCreateAPIView):
-    queryset = Address.objects.all()
-    serializer_class = AddressSerializer
+
+class UserDetailView(generics.RetrieveAPIView):
+    """
+    Получение пользователя по ID
+    """
+
+    queryset = User.objects.all()
+    serializer_class = UserSerializer

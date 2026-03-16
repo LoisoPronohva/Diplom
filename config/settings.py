@@ -1,11 +1,15 @@
-from pathlib import Path
 import os
+from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "django-insecure-replace-this-with-your-key"
+
+SECRET_KEY = "django-insecure-change-this"
+
 DEBUG = True
+
 ALLOWED_HOSTS = []
+
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -14,12 +18,16 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
     "rest_framework",
+    "django_filters",
+
     "users",
     "products",
+    "orders",
+    "cart",
 ]
 
-AUTH_USER_MODEL = "users.User"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -31,7 +39,9 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+
 ROOT_URLCONF = "config.urls"
+
 
 TEMPLATES = [
     {
@@ -49,7 +59,9 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = "config.wsgi.application"
+
 
 DATABASES = {
     "default": {
@@ -58,12 +70,59 @@ DATABASES = {
     }
 }
 
-AUTH_PASSWORD_VALIDATORS = []
 
-LANGUAGE_CODE = "en-us"
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+    },
+]
+
+
+LANGUAGE_CODE = "ru"
+
 TIME_ZONE = "UTC"
+
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = "/static/"
+
+STATIC_URL = "static/"
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+AUTH_USER_MODEL = "users.User"
+
+
+REST_FRAMEWORK = {
+    "DEFAULT_FILTER_BACKENDS": [
+        "django_filters.rest_framework.DjangoFilterBackend"
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.AllowAny"
+    ],
+}
+
+REST_FRAMEWORK = {
+
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+
+    "DEFAULT_THROTTLE_CLASSES": [
+        "rest_framework.throttling.UserRateThrottle"
+    ],
+
+    "DEFAULT_THROTTLE_RATES": {
+        "user": "10/min"
+    },
+}
+
+
+SPECTACULAR_SETTINGS = {
+
+    "TITLE": "Diploma Shop API",
+    "DESCRIPTION": "API интернет магазина",
+    "VERSION": "1.0.0",
+}

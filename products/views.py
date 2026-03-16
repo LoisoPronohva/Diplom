@@ -1,11 +1,21 @@
 from rest_framework import generics
-from .models import Product, ProductSpecification
-from .serializers import ProductSerializer, ProductSpecificationSerializer
+from .models import Product
+from .serializers import ProductSerializer
 
-class ProductListCreateView(generics.ListCreateAPIView):
+
+class ProductListView(generics.ListCreateAPIView):
+    """
+    Список товаров
+    """
+
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
-class ProductSpecificationListCreateView(generics.ListCreateAPIView):
-    queryset = ProductSpecification.objects.all()
-    serializer_class = ProductSpecificationSerializer
+
+class ProductDetailView(generics.RetrieveAPIView):
+    """
+    Детали товара
+    """
+
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
