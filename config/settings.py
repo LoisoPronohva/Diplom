@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from datetime import timedelta
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -108,15 +109,27 @@ REST_FRAMEWORK = {
 
 REST_FRAMEWORK = {
 
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 
     "DEFAULT_THROTTLE_CLASSES": [
-        "rest_framework.throttling.UserRateThrottle"
+        "rest_framework.throttling.UserRateThrottle",
     ],
 
     "DEFAULT_THROTTLE_RATES": {
-        "user": "10/min"
+        "user": "10/min",
     },
+}
+
+SIMPLE_JWT = {
+
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+
+    "AUTH_HEADER_TYPES": ("Bearer",),
+
 }
 
 
